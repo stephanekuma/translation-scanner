@@ -13,7 +13,7 @@ class ScanTranslationsCommand extends Command
 
     public function handle(): void
     {
-        $this->info("🔍 Scanning files for translations...");
+        $this->info('🔍 Scanning files for translations...');
 
         $paths = [
             base_path('app'),
@@ -37,7 +37,9 @@ class ScanTranslationsCommand extends Command
             $files = File::allFiles($path);
 
             foreach ($files as $file) {
-                if (!preg_match('/\.(php|blade\.php)$/', $file)) continue;
+                if (! preg_match('/\.(php|blade\.php)$/', $file)) {
+                    continue;
+                }
 
                 $content = File::get($file->getPathname());
 
@@ -65,6 +67,6 @@ class ScanTranslationsCommand extends Command
         File::put($outputPath, $phpContent);
 
         $this->info("✅ Translations extracted in : $outputPath");
-        $this->info("🔑 Number of keys found : " . count($translations));
+        $this->info('🔑 Number of keys found : '.count($translations));
     }
 }
